@@ -7,8 +7,9 @@ use App\Models\Ticket;
 use App\Models\TicketStatus;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
+use InvadersXX\FilamentKanbanBoard\Pages\FilamentKanbanBoard;
 
-class Kanban
+class Kanban extends FilamentKanbanBoard
 {
     protected static ?string $navigationIcon = 'heroicon-o-adjustments';
 
@@ -50,7 +51,7 @@ class Kanban
                 'id' => $item->id,
                 'title' => $item->name,
                 'bg-color' => $item->color . '11',
-                'border-color' => $item->color . '33'
+                'border-color' => $item->color . '55'
             ]);
     }
 
