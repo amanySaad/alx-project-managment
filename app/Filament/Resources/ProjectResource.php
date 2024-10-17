@@ -85,8 +85,12 @@ class ProjectResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\SpatieMediaLibraryImageColumn::make('cover')
-                    ->label(__('Cover image')),
+                Tables\Columns\TextColumn::make('cover')
+                    ->label(__('Cover image'))
+                    ->formatStateUsing(fn ($state) => new HtmlString('
+                        <div style=\'background-image: url("' . $state . '")\'
+                             class="w-8 h-8 rounded bg-cover bg-center bg-no-repeat bg-gray-50"></div>
+                    ')),
 
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('Project name'))
@@ -109,6 +113,10 @@ class ProjectResource extends Resource
                         '))
                     ->sortable()
                     ->searchable(),
+
+                Tables\Columns\TagsColumn::make('users.name')
+                    ->label(__('Affected users'))
+                    ->limit(2),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('Created at'))
