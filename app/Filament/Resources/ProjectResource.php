@@ -50,7 +50,7 @@ class ProjectResource extends Resource
                                     ->label(__('Project owner'))
                                     ->searchable()
                                     ->options(fn() => User::all()->pluck('name', 'id')->toArray())
-                                    ->default(fn() => auth()->user()->id)
+                                    ->default(fn() => auth()->user()?->id)
                                     ->required(),
 
                                 Forms\Components\Select::make('status_id')

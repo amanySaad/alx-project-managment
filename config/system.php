@@ -9,6 +9,7 @@ return [
             'roles' => [
 
                 'default' => 'collaborator',
+                'can_manage' => 'administrator',
 
                 'list' => [
                     'collaborator' => 'Collaborator',
