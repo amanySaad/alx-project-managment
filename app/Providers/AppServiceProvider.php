@@ -32,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
+
         // Register tippy styles
         Filament::registerStyles([
             'https://unpkg.com/tippy.js@6/dist/tippy.css',
@@ -41,5 +42,10 @@ class AppServiceProvider extends ServiceProvider
         Filament::registerScripts([
             'https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-tooltip@0.x.x/dist/cdn.min.js',
         ], true);
+
+        // Register navigation groups
+        Filament::registerNavigationGroups([
+            __('Permissions'),
+        ]);
     }
 }
