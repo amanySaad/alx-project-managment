@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Devaslanphp\FilamentAvatar\Core\HasAvatarUrl;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,7 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles, HasAvatarUrl;
 
     /**
      * The attributes that are mass assignable.
@@ -52,5 +53,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function projectsAffected(): BelongsToMany
     {
         return $this->belongsToMany(Project::class, 'project_users', 'user_id', 'project_id')->withPivot(['role']);
+    }
+    public function ticketsOwned(): HasMany
+    {
+        return $this->hasMany(Ticket::class, 'owner_id', 'id');
+    }
+    public function ticketsResponsible(): HasMany
+    {
+        return $this->hasMany(Ticket::class, 'responsible_id', 'id');
     }
 }
