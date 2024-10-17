@@ -39,30 +39,43 @@ class ProjectResource extends Resource
                 Forms\Components\Card::make()
                     ->schema([
                         Forms\Components\Grid::make()
+                            ->columns(3)
                             ->schema([
-                                Forms\Components\TextInput::make('name')
-                                    ->label(__('Project name'))
-                                    ->required()
-                                    ->maxLength(255)
-                                    ->columnSpan(2),
+                                Forms\Components\SpatieMediaLibraryFileUpload::make('cover')
+                                    ->label(__('Cover image'))
+                                    ->image()
+                                    ->helperText(
+                                        __('If not selected, an image will be generated based on the project name')
+                                    )
+                                    ->columnSpan(1),
 
-                                Forms\Components\Select::make('owner_id')
-                                    ->label(__('Project owner'))
-                                    ->searchable()
-                                    ->options(fn() => User::all()->pluck('name', 'id')->toArray())
-                                    ->default(fn() => auth()->user()?->id)
-                                    ->required(),
+                                Forms\Components\Grid::make()
+                                    ->columnSpan(2)
+                                    ->schema([
+                                        Forms\Components\TextInput::make('name')
+                                            ->label(__('Project name'))
+                                            ->required()
+                                            ->maxLength(255)
+                                            ->columnSpan(2),
 
-                                Forms\Components\Select::make('status_id')
-                                    ->label(__('Project status'))
-                                    ->searchable()
-                                    ->options(fn() => ProjectStatus::all()->pluck('name', 'id')->toArray())
-                                    ->default(fn () => ProjectStatus::where('is_default', true)->first()?->id)
-                                    ->required(),
+                                        Forms\Components\Select::make('owner_id')
+                                            ->label(__('Project owner'))
+                                            ->searchable()
+                                            ->options(fn() => User::all()->pluck('name', 'id')->toArray())
+                                            ->default(fn() => auth()->user()->id)
+                                            ->required(),
+
+                                        Forms\Components\Select::make('status_id')
+                                            ->label(__('Project status'))
+                                            ->searchable()
+                                            ->options(fn() => ProjectStatus::all()->pluck('name', 'id')->toArray())
+                                            ->default(fn() => ProjectStatus::where('is_default', true)->first()?->id)
+                                            ->required(),
+                                    ]),
 
                                 Forms\Components\RichEditor::make('description')
                                     ->label(__('Project description'))
-                                    ->columnSpan(2),
+                                    ->columnSpan(3),
                             ]),
                     ]),
             ]);
@@ -72,6 +85,14 @@ class ProjectResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\SpatieMediaLibraryImageColumn::make('cover')
+                    ->label(__('Cover image')),
+
+                Tables\Columns\TextColumn::make('name')
+                    ->label(__('Project name'))
+                    ->sortable()
+                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('owner.name')
                     ->label(__('Project owner'))
                     ->sortable()
@@ -79,18 +100,13 @@ class ProjectResource extends Resource
 
                 Tables\Columns\TextColumn::make('status.name')
                     ->label(__('Project status'))
-                    ->formatStateUsing(fn ($record) => new HtmlString('
+                    ->formatStateUsing(fn($record) => new HtmlString('
                             <div class="flex items-center gap-2">
                                 <span class="filament-tables-color-column relative flex h-6 w-6 rounded-md"
                                     style="background-color: ' . $record->status->color . '"></span>
                                 <span>' . $record->status->name . '</span>
                             </div>
                         '))
-                    ->sortable()
-                    ->searchable(),
-
-                Tables\Columns\TextColumn::make('name')
-                    ->label(__('Project name'))
                     ->sortable()
                     ->searchable(),
 
@@ -115,7 +131,7 @@ class ProjectResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\UsersRelationManager::class
+            RelationManagers\UsersRelationManager::class,
         ];
     }
 

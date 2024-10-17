@@ -26,5 +26,7 @@ return [
         ],
 
     ],
+    // System constants
+    'max_file_size' => 10240,
 
 ];
