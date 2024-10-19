@@ -2,26 +2,28 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TicketStatusResource\Pages;
-use App\Filament\Resources\TicketStatusResource\RelationManagers;
-use App\Models\TicketStatus;
+use App\Filament\Resources\TicketTypeResource\Pages;
+use App\Filament\Resources\TicketTypeResource\RelationManagers;
+use App\Models\TicketType;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Guava\FilamentIconPicker\Forms\IconPicker;
+use Guava\FilamentIconPicker\Tables\IconColumn;
 
-class TicketStatusResource extends Resource
+class TicketTypeResource extends Resource
 {
-    protected static ?string $model = TicketStatus::class;
+    protected static ?string $model = TicketType::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clipboard';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-check';
 
     protected static ?int $navigationSort = 1;
 
     protected static function getNavigationLabel(): string
     {
-        return __('Ticket statuses');
+        return __('Ticket types');
     }
 
     public static function getPluralLabel(): ?string
@@ -43,25 +45,23 @@ class TicketStatusResource extends Resource
                         Forms\Components\Grid::make()
                             ->schema([
                                 Forms\Components\TextInput::make('name')
-                                    ->label(__('Status name'))
+                                    ->label(__('Type name'))
                                     ->required()
                                     ->maxLength(255),
 
                                 Forms\Components\ColorPicker::make('color')
-                                    ->label(__('Status color'))
+                                    ->label(__('Type color'))
+                                    ->required(),
+
+                                IconPicker::make('icon')
+                                    ->label(__('Type icon'))
                                     ->required(),
 
                                 Forms\Components\Checkbox::make('is_default')
-                                    ->label(__('Default status'))
+                                    ->label(__('Default type'))
                                     ->helperText(
-                                        __('If checked, this status will be automatically affected to new projects')
+                                        __('If checked, this type will be automatically affected to new tickets')
                                     ),
-
-                                Forms\Components\TextInput::make('order')
-                                    ->label(__('Status order'))
-                                    ->integer()
-                                    ->default(fn() => TicketStatus::whereNull('project_id')->count() + 1)
-                                    ->required(),
                             ])
                     ])
             ]);
@@ -71,23 +71,23 @@ class TicketStatusResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('order')
-                    ->label(__('Status order'))
-                    ->sortable()
-                    ->searchable(),
-
                 Tables\Columns\ColorColumn::make('color')
-                    ->label(__('Status color'))
+                    ->label(__('Type color'))
                     ->sortable()
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('Status name'))
+                    ->label(__('Type name'))
+                    ->sortable()
+                    ->searchable(),
+
+                IconColumn::make('icon')
+                    ->label(__('Type icon'))
                     ->sortable()
                     ->searchable(),
 
                 Tables\Columns\IconColumn::make('is_default')
-                    ->label(__('Default status'))
+                    ->label(__('Default type'))
                     ->boolean()
                     ->sortable(),
 
@@ -106,9 +106,7 @@ class TicketStatusResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-            ])
-            ->reorderable('order')
-            ->defaultSort('order');
+            ]);
     }
 
     public static function getRelations(): array
@@ -121,10 +119,10 @@ class TicketStatusResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListTicketStatuses::route('/'),
-            'create' => Pages\CreateTicketStatus::route('/create'),
-            'view' => Pages\ViewTicketStatus::route('/{record}'),
-            'edit' => Pages\EditTicketStatus::route('/{record}/edit'),
+            'index' => Pages\ListTicketTypes::route('/'),
+            'create' => Pages\CreateTicketType::route('/create'),
+            'view' => Pages\ViewTicketType::route('/{record}'),
+            'edit' => Pages\EditTicketType::route('/{record}/edit'),
         ];
     }
 }

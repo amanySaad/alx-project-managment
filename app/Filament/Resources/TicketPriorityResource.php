@@ -2,26 +2,29 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TicketStatusResource\Pages;
-use App\Filament\Resources\TicketStatusResource\RelationManagers;
-use App\Models\TicketStatus;
+use App\Filament\Resources\TicketPriorityResource\Pages;
+use App\Filament\Resources\TicketPriorityResource\RelationManagers;
+use App\Models\TicketPriority;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Guava\FilamentIconPicker\Tables\IconColumn;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class TicketStatusResource extends Resource
+class TicketPriorityResource extends Resource
 {
-    protected static ?string $model = TicketStatus::class;
+    protected static ?string $model = TicketPriority::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clipboard';
+    protected static ?string $navigationIcon = 'heroicon-o-badge-check';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 4;
 
     protected static function getNavigationLabel(): string
     {
-        return __('Ticket statuses');
+        return __('Ticket priorities');
     }
 
     public static function getPluralLabel(): ?string
@@ -43,25 +46,19 @@ class TicketStatusResource extends Resource
                         Forms\Components\Grid::make()
                             ->schema([
                                 Forms\Components\TextInput::make('name')
-                                    ->label(__('Status name'))
+                                    ->label(__('Priority name'))
                                     ->required()
                                     ->maxLength(255),
 
                                 Forms\Components\ColorPicker::make('color')
-                                    ->label(__('Status color'))
+                                    ->label(__('Priority color'))
                                     ->required(),
 
                                 Forms\Components\Checkbox::make('is_default')
-                                    ->label(__('Default status'))
+                                    ->label(__('Default priority'))
                                     ->helperText(
-                                        __('If checked, this status will be automatically affected to new projects')
+                                        __('If checked, this priority will be automatically affected to new tickets')
                                     ),
-
-                                Forms\Components\TextInput::make('order')
-                                    ->label(__('Status order'))
-                                    ->integer()
-                                    ->default(fn() => TicketStatus::whereNull('project_id')->count() + 1)
-                                    ->required(),
                             ])
                     ])
             ]);
@@ -71,23 +68,18 @@ class TicketStatusResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('order')
-                    ->label(__('Status order'))
-                    ->sortable()
-                    ->searchable(),
-
                 Tables\Columns\ColorColumn::make('color')
-                    ->label(__('Status color'))
+                    ->label(__('Priority color'))
                     ->sortable()
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('Status name'))
+                    ->label(__('Priority name'))
                     ->sortable()
                     ->searchable(),
 
                 Tables\Columns\IconColumn::make('is_default')
-                    ->label(__('Default status'))
+                    ->label(__('Default priority'))
                     ->boolean()
                     ->sortable(),
 
@@ -106,9 +98,7 @@ class TicketStatusResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-            ])
-            ->reorderable('order')
-            ->defaultSort('order');
+            ]);
     }
 
     public static function getRelations(): array
@@ -121,10 +111,10 @@ class TicketStatusResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListTicketStatuses::route('/'),
-            'create' => Pages\CreateTicketStatus::route('/create'),
-            'view' => Pages\ViewTicketStatus::route('/{record}'),
-            'edit' => Pages\EditTicketStatus::route('/{record}/edit'),
+            'index' => Pages\ListTicketPriorities::route('/'),
+            'create' => Pages\CreateTicketPriority::route('/create'),
+            'view' => Pages\ViewTicketPriority::route('/{record}'),
+            'edit' => Pages\EditTicketPriority::route('/{record}/edit'),
         ];
     }
 }
