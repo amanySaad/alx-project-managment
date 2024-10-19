@@ -11,15 +11,15 @@ use Filament\Pages\Actions\Action;
 use Filament\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
 
-class Kanban extends Page implements HasForms
+class Scrum extends Page implements HasForms
 {
     use InteractsWithForms, KanbanScrumHelper;
 
     protected static ?string $navigationIcon = 'heroicon-o-view-boards';
 
-    protected static ?string $slug = 'kanban/{project}';
+    protected static ?string $slug = 'scrum/{project}';
 
-    protected static string $view = 'filament.pages.kanban';
+    protected static string $view = 'filament.pages.scrum';
 
     protected static bool $shouldRegisterNavigation = false;
 
@@ -31,8 +31,8 @@ class Kanban extends Page implements HasForms
     public function mount(Project $project)
     {
         $this->project = $project;
-        if ($this->project->type === 'scrum') {
-            $this->redirect(route('filament.pages.scrum/{project}', ['project' => $project]));
+        if ($this->project->type !== 'scrum') {
+            $this->redirect(route('filament.pages.kanban/{project}', ['project' => $project]));
         } elseif (
             $this->project->owner_id != auth()->user()->id
             &&
@@ -46,20 +46,33 @@ class Kanban extends Page implements HasForms
     protected function getActions(): array
     {
         return [
+            Action::make('manage-sprints')
+                ->button()
+                ->visible(fn() => $this->project->currentSprint && auth()->user()->can('update', $this->project))
+                ->label(__('Manage sprints'))
+                ->color('primary')
+                ->url(route('filament.resources.projects.edit', $this->project)),
+
             Action::make('refresh')
                 ->button()
+                ->visible(fn() => $this->project->currentSprint)
                 ->label(__('Refresh'))
                 ->color('secondary')
                 ->action(function () {
                     $this->getRecords();
                     Filament::notify('success', __('Kanban board updated'));
-                })
+                }),
         ];
     }
 
     protected function getHeading(): string|Htmlable
     {
-        return $this->kanbanHeading();
+        return $this->scrumHeading();
+    }
+
+    protected function getSubheading(): string|Htmlable|null
+    {
+        return $this->scrumSubHeading();
     }
 
     protected function getFormSchema(): array
