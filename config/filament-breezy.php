@@ -1,4 +1,5 @@
 <?php
+// config for JeffGreco13/FilamentBreezy
 return [
     /*
     |--------------------------------------------------------------------------
@@ -98,7 +99,7 @@ return [
     |--------------------------------------------------------------------------
     | Path to Profile page component.
     */
-    "profile_page_component_path" => \JeffGreco13\FilamentBreezy\Pages\MyProfile::class,
+    "profile_page_component_path" => \App\Http\Livewire\Profile::class,
     /*
     |--------------------------------------------------------------------------
     | Where to redirect the user after registration.

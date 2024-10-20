@@ -12,6 +12,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Http\Middleware\LocaleMiddleware;
 
 return [
 
@@ -183,7 +184,7 @@ return [
     */
 
     'database_notifications' => [
-        'enabled' => false,
+        'enabled' => true,
         'polling_interval' => '30s',
     ],
 
@@ -201,12 +202,12 @@ return [
 
     'broadcasting' => [
 
-        // 'echo' => [
-        //     'broadcaster' => 'pusher',
-        //     'key' => env('VITE_PUSHER_APP_KEY'),
-        //     'cluster' => env('VITE_PUSHER_APP_CLUSTER'),
-        //     'forceTLS' => true,
-        // ],
+         'echo' => [
+             'broadcaster' => 'pusher',
+             'key' => env('VITE_PUSHER_APP_KEY'),
+             'cluster' => env('VITE_PUSHER_APP_CLUSTER'),
+             'forceTLS' => true,
+         ],
 
     ],
 
@@ -329,6 +330,7 @@ return [
             SubstituteBindings::class,
             DispatchServingFilamentEvent::class,
             MirrorConfigToSubpackages::class,
+            LocaleMiddleware::class
         ],
     ],
 
