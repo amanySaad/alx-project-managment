@@ -1,135 +1,72 @@
 <?php
-
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
+use Carbon\Carbon;
 
-class Project extends Model implements HasMedia
+class Project extends Model
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia;
+    use HasFactory;
 
     protected $fillable = [
-        'name', 'description', 'status_id', 'owner_id', 'ticket_prefix',
-        'status_type', 'type'
+        'user_id',
+        'name',
+        'description',
+        'start_date',
+        'end_date',
+        'status',
+        'budget',
     ];
 
-    protected $appends = [
-        'cover'
+    protected $dates = [
+        'start_date',
+        'end_date',
     ];
 
-    public function owner(): BelongsTo
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
+    ];
+
+    public function user()
     {
-        return $this->belongsTo(User::class, 'owner_id', 'id');
+        return $this->belongsTo(User::class);
     }
 
-    public function status(): BelongsTo
+    public function tasks()
     {
-        return $this->belongsTo(ProjectStatus::class, 'status_id', 'id')->withTrashed();
+        return $this->hasMany(Task::class);
     }
 
-    public function users(): BelongsToMany
+    public function files()
     {
-        return $this->belongsToMany(User::class, 'project_users', 'project_id', 'user_id')->withPivot(['role']);
+        return $this->hasMany(File::class);
     }
 
-    public function tickets(): HasMany
+    public function getStatusAttribute()
     {
-        return $this->hasMany(Ticket::class, 'project_id', 'id');
+        $today = Carbon::now();
+
+        if ($this->start_date && $today->lt($this->start_date)) {
+            return 'pending';
+        }
+
+        if ($this->end_date && $this->end_date->lt($today)) {
+            $unfinishedTasks = $this->tasks()->where('status', '!=', 'completed')->count();
+            return $unfinishedTasks > 0 ? 'unfinished' : 'finished';
+        }
+
+        return 'on_going';
     }
 
-    public function statuses(): HasMany
+    public function teamProjects()
     {
-        return $this->hasMany(TicketStatus::class, 'project_id', 'id');
+        return $this->belongsToMany(ProjectTeam::class, 'project_teams', 'project_id', 'user_id');
     }
 
-    public function epics(): HasMany
+    public function users()
     {
-        return $this->hasMany(Epic::class, 'project_id', 'id');
-    }
-
-    public function sprints(): HasMany
-    {
-        return $this->hasMany(Sprint::class, 'project_id', 'id');
-    }
-
-    public function epicsFirstDate(): Attribute
-    {
-        return new Attribute(
-            get: function () {
-                $firstEpic = $this->epics()->orderBy('starts_at')->first();
-                if ($firstEpic) {
-                    return $firstEpic->starts_at;
-                }
-                return now();
-            }
-        );
-    }
-
-    public function epicsLastDate(): Attribute
-    {
-        return new Attribute(
-            get: function () {
-                $firstEpic = $this->epics()->orderBy('ends_at', 'desc')->first();
-                if ($firstEpic) {
-                    return $firstEpic->ends_at;
-                }
-                return now();
-            }
-        );
-    }
-
-    public function contributors(): Attribute
-    {
-        return new Attribute(
-            get: function () {
-                $users = $this->users;
-                $users->push($this->owner);
-                return $users->unique('id');
-            }
-        );
-    }
-
-    public function cover(): Attribute
-    {
-        return new Attribute(
-            get: fn() => $this->media('cover')?->first()?->getFullUrl()
-                ??
-                'https://ui-avatars.com/api/?background=3f84f3&color=ffffff&name=' . $this->name
-        );
-    }
-
-    public function currentSprint(): Attribute
-    {
-        return new Attribute(
-            get: fn() => $this->sprints()
-                ->whereNotNull('started_at')
-                ->whereNull('ended_at')
-                ->first()
-        );
-    }
-
-    public function nextSprint(): Attribute
-    {
-        return new Attribute(
-            get: function () {
-                if ($this->currentSprint) {
-                    return $this->sprints()
-                        ->whereNull('started_at')
-                        ->whereNull('ended_at')
-                        ->where('starts_at', '>=', $this->currentSprint->ends_at)
-                        ->orderBy('starts_at')
-                        ->first();
-                }
-                return null;
-            }
-        );
+        return $this->belongsToMany(User::class, 'project_teams', 'project_id', 'user_id');
     }
 }

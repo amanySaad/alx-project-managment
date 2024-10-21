@@ -14,13 +14,6 @@ return [
     |
     */
 
-    'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
-        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
-        'scheme' => 'https',
-    ],
-
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
@@ -31,40 +24,15 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'github' => [
-        'client_id' => env('GITHUB_ID'),
-        'client_secret' => env('GITHUB_SECRET'),
-        'redirect' => env('GITHUB_URL'),
+    'resend' => [
+        'key' => env('RESEND_KEY'),
     ],
 
-    'google' => [
-        'client_id' => env('GOOGLE_CLIENT_ID'),
-        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => env('GOOGLE_CLIENT_CALLBACK')
-    ],
-
-    'facebook' => [
-        'client_id' => env('FACEBOOK_CLIENT_ID'),
-        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
-        'redirect' => env('FACEBOOK_CLIENT_CALLBACK')
-    ],
-
-    'twitter' => [
-        'client_id' => env('TWITTER_CLIENT_ID'),
-        'client_secret' => env('TWITTER_CLIENT_SECRET'),
-        'redirect' => env('TWITTER_CLIENT_CALLBACK')
-    ],
-
-    'oidc' => [
-        'is_enabled' => true,
-        'client_id' => env('OIDC_CLIENT_ID'),
-        'client_secret' => env('OIDC_CLIENT_SECRET'),
-        'discovery_endpoint' => env('OIDC_DISCOVERY_ENDPOINT'),
-        'redirect_uri' => env('OIDC_REDIRECT_URI'),
-        'url_authorize' => env('OIDC_URL_AUTHORIZE'),
-        'url_access_token' => env('OIDC_URL_ACCESS_TOKEN'),
-        'url_resource_owner_details' => env('OIDC_URL_RESOURCE_OWNER_DETAILS'),
-        'scope' => explode(",", env('OIDC_SCOPE')),
+    'slack' => [
+        'notifications' => [
+            'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),
+            'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
+        ],
     ],
 
 ];
