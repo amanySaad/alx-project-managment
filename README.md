@@ -1,20 +1,10 @@
-<p align="center">
-  <img src="https://github.com/arafat-web/Task-Manager/assets/26932301/d5f6a26e-32d1-44dc-aee5-9548a44506ae" alt="Icon Description">
-</p>
-
-<h1 align="center">Task Manager</h1>
-
-<p align="center">
-  <img src="https://img.shields.io/github/stars/arafat-web/Task-Manager?style=for-the-badge" alt="Total Issues">
-  <img src="https://img.shields.io/github/issues/arafat-web/Task-Manager?style=for-the-badge">
-  <img src="https://img.shields.io/github/license/arafat-web/Task-Manager?style=for-the-badge" alt="License">
-</p>
+<h1 align="center">Alx Students Task Manager</h1>
 
 ## Introduction
-Task Manager is an open-source Laravel application designed to simplify the process of managing project alone with task. The task page is designed like clickup or trello board, so developer will get a very flexbility to handle all This documentation provides a step-by-step guide on how to set up the project.
+Alx Students Task Manager is an open-source Laravel application designed to simplify the process of managing projects . The task page is designed like clickup or trello board, so developer will get a very flexbility to handle all This documentation provides a step-by-step guide on how to set up the project.
 
 ### Prerequisites
-- PHP 8.1 or higher
+- PHP >= 8.1
 - Composer
 - Laravel 10 or higher
 - MySQL or any other supported database system
@@ -23,8 +13,8 @@ Task Manager is an open-source Laravel application designed to simplify the proc
 
 ### Step 1: Clone the Repository
 ```
-git clone https://github.com/arafat-web/Task-Manager.git
-cd Task-Manager
+git clone https://github.com/amanySaad/alx-project-managment.git
+cd alx-project-managment
 ```
 
 ### Step 2: Install Dependencies
@@ -87,10 +77,6 @@ Task Manager allows users to efficiently manage projects and tasks through a use
    - Upload and attach files to tasks or projects.
    - Easily access all necessary documents and resources in one place.
 
-## Demo
-<img src="https://github.com/arafat-web/Task-Manager/assets/26932301/d5f6a26e-32d1-44dc-aee5-9548a44506ae" alt="Demo">
-<img src="https://github.com/arafat-web/Task-Manager/assets/26932301/8795129a-69e5-4911-bb26-caae3bca50be" alt="Demo">
-<img src="https://github.com/arafat-web/Task-Manager/assets/26932301/bd96fa3c-7f43-4ab7-8aa1-4614629d9d26" alt="Demo">
 
 ## Contributing
 For any issues or inquiries, please open an issue on the [Issues](https://github.com/arafat-web/Task-Manager/issues).<br/>
@@ -100,8 +86,5 @@ If you can help me by contributing. Please don't hesitate to open a [Pull Reques
 
 
 ### Contact Me
-[![Email](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:arafat.122260@gmail.com)
-[![Facbook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://www.facebook.com/arafathossain000)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/arafat-hossain-ar-a174b51a6/)
-[![Sololearn](https://img.shields.io/badge/-Sololearn-3a464b?style=for-the-badge&logo=Sololearn&logoColor=white)](https://www.sololearn.com/profile/4703319)
-[![Website](https://img.shields.io/badge/website-000000?style=for-the-badge&logo=About.me&logoColor=white)](https://arafatdev.com)
+[![Email](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:eng.am.aboelella@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/amany-abolella-93646546)
