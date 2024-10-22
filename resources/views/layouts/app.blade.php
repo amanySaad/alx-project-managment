@@ -22,7 +22,7 @@
             margin: 0;
             overflow: hidden;
             background-color: rgb(241 245 249);
-            font-family: "Noto Sans", sans-serif !important; 
+            font-family: "Noto Sans", sans-serif !important;
         }
 
         .btn {
@@ -32,7 +32,7 @@
 
         .sidebar {
             width: 250px;
-            background-color: #343a40;
+            background-color: #082581;
             color: white;
             flex-shrink: 0;
             display: flex;
@@ -50,7 +50,7 @@
 
         .sidebar .nav-link:hover,
         .sidebar .nav-link.active {
-            background-color: #495057;
+            background-color: #053f7a;
             border-radius: 0.25rem;
         }
 
@@ -74,11 +74,11 @@
 
         .navbar-brand {
             font-weight: bold;
-            color: #343a40;
+            color: #082581;
         }
 
         .navbar-nav .nav-link {
-            color: #343a40;
+            color: #082581;
         }
 
         .navbar-nav .nav-link:hover {
@@ -107,7 +107,7 @@
         <h4 class="mb-4 text-center">
             <a href="{{ route('dashboard') }}">
                 <img style=" filter: invert(100%) brightness(200%);"
-                    src="{{ asset('assets/img/logo-circle-horizontal.png') }}" class="img-fluid" width="100%"
+                    src="{{ asset('assets/img/holberton-logo-full-alx.png') }}" class="img-fluid" width="100%"
                     alt="task manager">
             </a>
         </h4>
