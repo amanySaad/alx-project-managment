@@ -79,8 +79,8 @@ Task Manager allows users to efficiently manage projects and tasks through a use
 
 
 ## Contributing
-For any issues or inquiries, please open an issue on the [Issues](https://github.com/arafat-web/Task-Manager/issues).<br/>
-If you can help me by contributing. Please don't hesitate to open a [Pull Request](https://github.com/arafat-web/Task-Manager/pulls).<br/>
+For any issues or inquiries, please open an issue on the [Issues](https://github.com/amanySaad/alx-project-managment/issues).<br/>
+If you can help me by contributing. Please don't hesitate to open a [Pull Request](https://github.com/amanySaad/alx-project-managment/pulls).<br/>
 🎉 **Thanks for reading!** 🌟  
 
 
