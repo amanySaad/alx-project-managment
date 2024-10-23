@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> @yield('title') | Task Manager </title>
+    <title> @yield('title') | Alx Task Manager </title>
     <link rel="shortcut icon" href="{{ asset('assets/img/logo-circle.png') }}" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +32,7 @@
 
         .sidebar {
             width: 250px;
-            background-color: #082581;
+            background-color: #000000;
             color: white;
             flex-shrink: 0;
             display: flex;
@@ -45,13 +45,14 @@
             display: flex;
             align-items: center;
             padding: 10px;
-            border-bottom: 1px solid #495057;
+            border-bottom: 1px solid #00446f;
         }
 
         .sidebar .nav-link:hover,
         .sidebar .nav-link.active {
-            background-color: #053f7a;
+            background-color: #00446f;
             border-radius: 0.25rem;
+            color: #ffffff;
         }
 
         .sidebar .nav-link .bi {
@@ -106,9 +107,9 @@
     <div class="sidebar d-flex flex-column p-3">
         <h4 class="mb-4 text-center">
             <a href="{{ route('dashboard') }}">
-                <img style=" filter: invert(100%) brightness(200%);"
-                    src="{{ asset('assets/img/holberton-logo-full-alx.png') }}" class="img-fluid" width="100%"
-                    alt="task manager">
+                <img
+                    src="{{ asset('assets/img/logo-horiz.png') }}" class="img-fluid" width="100%"
+                    alt="alx task manager">
             </a>
         </h4>
         <ul class="nav flex-column">
@@ -196,8 +197,8 @@
         </main>
         <footer class="mt-auto py-3 text-center">
             <div class="container">
-                <span class="text-muted">&copy; {{ date('Y') }} Task Manager | Developed by <a
-                        href="https://github.com/arafat-web" target="_blank">Arafat Hossain Ar</a> </span>
+                <span class="text-muted">&copy; {{ date('Y') }} Alx Task Manager | Developed by <a
+                        href="https://github.com/amanySaad" target="_blank">Amany Saad</a> </span>
             </div>
         </footer>
     </div>
