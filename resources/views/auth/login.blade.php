@@ -21,19 +21,15 @@
 
 
         .card-header {
-            background-color: #495057;
+            background-color: #000;
             color: white;
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
             font-size: 1.25rem;
             font-weight: 500;
         }
-        .card-header img{
-            filter: invert(100%) brightness(200%);
-        }
-
         .btn-primary {
-            background-color: #495057;
+            background-color: #00446f;
             border-color: #495057;
             font-weight: 500;
         }
@@ -62,7 +58,7 @@
         <div class="col-md-5">
             <div class="card border-0 shadow-sm">
                 <div class="card-header text-center p-4 fs-1">
-                    <img src="{{ asset('assets/img/logo-horizontal.png') }}" class="img-fluid" alt="task manager">
+                    <img src="{{ asset('assets/img/logo-horiz.png') }}" class="img-fluid" alt="alx task manager">
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -91,9 +87,9 @@
                     </form>
                 </div>
 
-                <div class="card-footer text-center">
-                   <p>Developed by: <a class="text-decoration-none text-black" href="https://github.com/arafat-web" target="_blank">Arafat Hossain Ar</a></p>
-                </div>
+{{--                <div class="card-footer text-center">--}}
+{{--                   <p>Developed by: <a class="text-decoration-none text-black" href="https://github.com/amanySaad" target="_blank">Amany Saad</a></p>--}}
+{{--                </div>--}}
             </div>
         </div>
     </div>
